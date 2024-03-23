@@ -12,7 +12,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const createCustomers = await axios.post(
-        "http://localhost:5000/customers/register",
+        `${process.env.NEXT_PUBLIC_BASE_URL}/customers/register`,
         {
           ...data,
         }
@@ -120,7 +120,7 @@ const Register = () => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Sign In
+              Sign Up
             </button>
           </div>
         </form>

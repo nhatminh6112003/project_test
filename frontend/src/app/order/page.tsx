@@ -9,9 +9,8 @@ const Order = () => {
 
   const handleCancelOrder = async (orderId: number) => {
     const action = await axios.put(
-      `http://localhost:5000/orders/cancel/${orderId}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/orders/cancel/${orderId}`
     );
-    console.log("🚀 ~ handleCancelOrder ~ action:", action);
   };
   useEffect(() => {
     if (currentUser) {
@@ -20,7 +19,7 @@ const Order = () => {
   }, [currentUser]);
   const getMyOrder = async () => {
     const data = (
-      await axios.get(`http://localhost:5000/orders/user/${currentUser?.id}`)
+      await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/orders/user/${currentUser?.id}`)
     )?.data;
     setData(data);
   };

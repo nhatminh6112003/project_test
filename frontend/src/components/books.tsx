@@ -10,7 +10,7 @@ const Books = ({ books }: BooksProps) => {
   const { addCart } = useCarts();
   return (
     <div
-      className="grid grid-cols-1 gap-4 my-2  md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 bg-white product_2 "
+      className="grid grid-cols-1 gap-4 my-2  md:grid-cols-2  lg:grid-cols-3  bg-white product_2 "
       id="product"
     >
       {books?.map((item) => (
@@ -22,8 +22,12 @@ const Books = ({ books }: BooksProps) => {
                 src={item?.coverImage}
                 alt=""
               />
-              <div className="my-3 line-clamp-2 flex justify-center text-center">
-                {item?.title} ({item?.writer})
+              <div className="my-2 line-clamp-2 flex justify-center text-center">
+                {item?.title}
+              </div>
+              <div className="my-2 flex justify-center items-center gap-1 ">
+                <p className="text-[#007185]">{item?.writer} </p>
+                <span>(Writer)</span>
               </div>
             </div>
 

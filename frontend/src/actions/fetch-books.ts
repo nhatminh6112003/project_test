@@ -2,8 +2,8 @@
 import { Book } from "./../types/index";
 
 export async function fetchBooks(page: number, keyword = "") {
-  const perPage = 4;
-  const apiUrl = `http://localhost:5000/books?page=${page}&perPage=${perPage}&keyword=${keyword}`;
+  const perPage = 3;
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/books/list?page=${page}&perPage=${perPage}&keyword=${keyword}`;
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();

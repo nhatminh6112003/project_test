@@ -12,7 +12,7 @@ const Login = () => {
   const loginSubmit = async (e: any) => {
     e.preventDefault();
     const loginCustomers = await axios.post(
-      "http://localhost:5000/customers/login",
+      `${process.env.NEXT_PUBLIC_BASE_URL}/customers/login`,
       {
         ...data,
       }

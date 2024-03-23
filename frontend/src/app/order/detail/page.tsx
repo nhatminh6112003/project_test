@@ -16,7 +16,7 @@ const Detail = () => {
   useEffect(() => {
     const getOrderItem = async () => {
       const data = (
-        await axios.get(`http://localhost:5000/orderItem/${order_id}`)
+        await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/orderItem/${order_id}`)
       )?.data;
       setData(data);
     };

@@ -36,29 +36,37 @@ const Cart = () => {
   }, [currentUser]);
   const getPoint = async () => {
     const data = await axios.get(
-      `http://localhost:5000/customers/profile?username=${currentUser?.username}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/customers/profile?username=${currentUser?.username}`
     );
     setMyPoint(data?.data?.user?.point);
   };
   const buyBook = async () => {
-    const createOrder = await axios.post("http://localhost:5000/orders", {
-      user_id: currentUser?.id,
-      amount: totalCart,
-    });
-    console.log("🚀 ~ buyBook ~ createOrder:", createOrder);
+    const createOrder = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/orders/create`,
+      {
+        user_id: currentUser?.id,
+        amount: totalCart,
+      }
+    );
     if (createOrder?.data?.status === 200) {
       localStorage.removeItem("carts");
       setCarts([]);
       getPoint();
     }
-    const handleAddOrderItem = carts?.map(async (item) => {
-      await axios.post("http://localhost:5000/orderItem", {
-        order_id: createOrder?.data?.order_id,
-        product_id: item?.id,
-        point: item?.point,
-        quantity: item?.quantity,
+    if (createOrder?.data?.order_id) {
+      const handleAddOrderItem = carts?.map(async (item) => {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/orderItem/create`,
+          {
+            order_id: createOrder?.data?.order_id,
+            product_id: item?.id,
+            point: item?.point,
+            quantity: item?.quantity,
+          }
+        );
       });
-    });
+    }
+
     alert(createOrder?.data?.message);
   };
   return currentUser ? (

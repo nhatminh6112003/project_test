@@ -8,7 +8,7 @@ import { CreateOrderItemDto } from 'src/dtos/order-item.dto';
 @Controller('orderItem')
 export class OrdersItemController {
   constructor(private readonly orderItemService: OrderItemService) {}
-  @Post()
+  @Post('create')
   @ApiOperation({ summary: 'Create a new order' })
   @ApiResponse({
     status: 201,
@@ -19,7 +19,7 @@ export class OrdersItemController {
     return this.orderItemService.create(orderItemDto);
   }
 
-  @Get()
+  @Get('list')
   @ApiOperation({ summary: 'Get List order' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   async getListCustomer() {

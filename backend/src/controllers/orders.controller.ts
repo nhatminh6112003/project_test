@@ -7,7 +7,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
-  @Post()
+  @Post('create')
   @ApiOperation({ summary: 'Create a new order' })
   @ApiResponse({
     status: 201,
@@ -18,7 +18,7 @@ export class OrdersController {
     return this.ordersService.create(createOrderDto);
   }
 
-  @Get()
+  @Get('list')
   @ApiOperation({ summary: 'Get List order' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   async getListCustomer() {

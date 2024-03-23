@@ -9,7 +9,7 @@ import { FindManyBooksQueryParams } from '../types/types';
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
-  @Post()
+  @Post('create')
   @ApiOperation({ summary: 'Create a new book' })
   @ApiResponse({
     status: 201,
@@ -23,7 +23,7 @@ export class BooksController {
     return this.booksService.create(createBookDto);
   }
 
-  @Get()
+  @Get('list')
   @ApiOperation({ summary: 'Get a list of all books' })
   @ApiResponse({ status: 200, description: 'Success' })
   async getList(@Query() param: FindManyBooksQueryParams) {

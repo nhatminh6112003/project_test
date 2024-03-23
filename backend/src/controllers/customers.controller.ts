@@ -22,7 +22,7 @@ export class CustomersController {
     return this.customersService.create(createCustomerDto);
   }
 
-  @Get()
+  @Get('list')
   @ApiOperation({ summary: 'List customer' })
   @ApiResponse({
     status: 200,
