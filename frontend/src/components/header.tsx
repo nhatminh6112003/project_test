@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useCarts } from "@/hooks/useCarts";
+import useMyPoint from "@/hooks/useMyPoint";
+import { useRouter } from "next/router";
+import axios from "axios";
 const Header = () => {
+  // const [myPoint, setMyPoint] = useState<number | null>();
   const { currentUser, clearUser } = useCurrentUser();
-
+  const { myPoint, getPoint } = useMyPoint();
+ 
   return (
     <>
       <div className="bg-[#1A94FF] text-white hidden 2xl:block xl:block lg:block">
@@ -21,39 +25,41 @@ const Header = () => {
                     className="w-14 "
                     src="https://salt.tikicdn.com/ts/upload/ae/f5/15/2228f38cf84d1b8451bb49e2c4537081.png"
                   />
-                </Link  >
+                </Link>
               </div>
             </div>
-            <div className="flex items-center justify-between  ">
-              <div className="flex ml-4 hidden 2xl:flex xl:flex">
+            <div className="flex items-center justify-between gap-3  ">
+              <div className="flex gap-2 ml-4 hidden 2xl:flex xl:flex">
                 <img
                   className="w-8 h-8 mr-2"
                   src="https://salt.tikicdn.com/ts/upload/67/de/1e/90e54b0a7a59948dd910ba50954c702e.png"
                   alt=""
                 />
                 {currentUser?.username ? (
-                  <div>
-                    <span className="flex flex-col">
-                    <span className="inline-block text-xs">
-                      {currentUser?.first_name} {currentUser?.last_name}
+                  <div className="flex flex-col gap-1">
+                    <span className="flex flex-col gap-1">
+                      <span className="inline-block text-xs">
+                        {currentUser?.first_name} {currentUser?.last_name}
+                      </span>
+                      <a
+                        href="/"
+                        onClick={() => {
+                          clearUser();
+                          localStorage.removeItem("carts");
+                        }}
+                        className="text-xs logout"
+                      >
+                        Logout
+                      </a>
                     </span>
-                    <a
-                      href="/"
-                      onClick={() => {
-                        clearUser();
-                        localStorage.removeItem('carts')
-                      }}
-                      className="text-xs logout"
-                    >
-                      Logout
-                    </a>
-                  </span>
-                  <div className="dropdown inline-block relative">
-                  <Link href='/order' className=" flex items-center text-sm ">
-                  My Order
-                  </Link>
-                </div>
-                
+                    <div className="dropdown inline-block relative">
+                      <Link
+                        href="/order"
+                        className=" flex items-center text-sm "
+                      >
+                        My Order
+                      </Link>
+                    </div>
                   </div>
                 ) : (
                   <span className="inline-block text-xs">
@@ -62,7 +68,7 @@ const Header = () => {
                   </span>
                 )}
               </div>
-              <div className="flex ml-4 items-end cursor-pointer ">
+              <div className="flex items-center cursor-pointer ">
                 <div className="relative">
                   <Link href="/cart">
                     <img
@@ -74,12 +80,17 @@ const Header = () => {
                 </div>
                 <a href="/cart">
                   {" "}
-                  <span className="text-xs ml-1   ">Cart</span>
+                  {/* <span className="text-xs ml-1   ">Cart</span> */}
                 </a>
               </div>
+              My point : {myPoint}
+              {/* {currentUser && (
+                <div className="flex items-center text-md mt-2">
+                  My point : {myPoint}
+                </div>
+              )} */}
             </div>
           </div>
-          {/* end menu đầu */}
         </div>
       </div>
       <div className="bg-[#1A94FF] 2xl:hidden  xl:hidden lg:hidden md:block sm:block">

@@ -19,7 +19,9 @@ const Order = () => {
   }, [currentUser]);
   const getMyOrder = async () => {
     const data = (
-      await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/orders/user/${currentUser?.id}`)
+      await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/orders/user/${currentUser?.id}`
+      )
     )?.data;
     setData(data);
   };
@@ -96,9 +98,7 @@ const Order = () => {
       </table>
     </div>
   ) : (
-    <div className="text-center mt-4">
-      <Link href="/login">Login here</Link>
-    </div>
+    ""
   );
 };
 

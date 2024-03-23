@@ -7,7 +7,6 @@ export async function fetchBooks(page: number, keyword = "") {
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
-    console.log("TCL: fetchBooks -> data", data);
     return data?.data as Book[];
   } catch (error) {
     console.error("Error fetching data:", error);

@@ -5,8 +5,13 @@ import { CartItem } from "@/hooks/useCarts";
 import Link from "next/link";
 import axios from "axios";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
+import useMyPoint from "@/hooks/useMyPoint";
 const Cart = () => {
-  const [myPoint, setMyPoint] = useState<number>(0);
+  const router = useRouter();
+  const { myPoint, setMyPoint, getPoint } = useMyPoint();
+
+  // const [myPoint, setMyPoint] = useState<number>(0);
   const { currentUser } = useCurrentUser();
   const { carts, getCarts, removeCart, setCarts } = useCarts();
   const [totalCart, setTotalCart] = useState<number | null>();
@@ -29,17 +34,17 @@ const Cart = () => {
     }
   }, [totalCart, carts]);
 
-  useEffect(() => {
-    if (currentUser) {
-      getPoint();
-    }
-  }, [currentUser]);
-  const getPoint = async () => {
-    const data = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/customers/profile?username=${currentUser?.username}`
-    );
-    setMyPoint(data?.data?.user?.point);
-  };
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     getPoint();
+  //   }
+  // }, [currentUser]);
+  // const getPoint = async () => {
+  //   const data = await axios.get(
+  //     `${process.env.NEXT_PUBLIC_BASE_URL}/customers/profile?username=${currentUser?.username}`
+  //   );
+  //   setMyPoint(data?.data?.user?.point);
+  // };
   const buyBook = async () => {
     const createOrder = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/orders/create`,
@@ -51,7 +56,8 @@ const Cart = () => {
     if (createOrder?.data?.status === 200) {
       localStorage.removeItem("carts");
       setCarts([]);
-      getPoint();
+      await getPoint();
+      window.location.href = "/order";
     }
     if (createOrder?.data?.order_id) {
       const handleAddOrderItem = carts?.map(async (item) => {
@@ -142,13 +148,13 @@ const Cart = () => {
               </div>
               <div className="text-end mt-[25px] cursor-pointer ">
                 <button
-                  className="bg-[#ff424e] py-[13px] px-[10px] text-white w-[300px] order_button"
+                  className="bg-[#ff424e] py-[13px] px-[10px] text-white w-[300px] "
                   onClick={() => {
                     buyBook();
                     // localStorage.removeItem("carts");
                   }}
                 >
-                  Buy
+                  Order
                 </button>
               </div>
             </div>

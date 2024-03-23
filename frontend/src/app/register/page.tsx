@@ -5,9 +5,7 @@ import { useRouter } from "next/navigation";
 const Register = () => {
   const [data, setData] = useState({});
   const router = useRouter();
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
   const registerSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -17,6 +15,10 @@ const Register = () => {
           ...data,
         }
       );
+      console.log(createCustomers?.status);
+      if (createCustomers?.status == 409) {
+        alert("Username already exists ");
+      }
       if (createCustomers.status == 201) {
         setData({
           username: "",
