@@ -53,7 +53,7 @@ const ProductsPage = () => {
   return (
     <div>
       <div className="container flex-1 mt-3">
-        <div className=" flex ">
+        {/* <div className=" flex ">
           <input
             onChange={(e) => {
               const keyword = e.target.value;
@@ -81,7 +81,7 @@ const ProductsPage = () => {
             />
             Search
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="container mx-auto px-4 py-8 min-h-screen max-w-5xl">
         <Books books={books} />
